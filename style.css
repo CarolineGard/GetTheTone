@@ -1,0 +1,25 @@
+
+body {
+	background: #85DDC7;
+	text-align: center;
+}
+
+h5 {
+	text-transform: uppercase;
+	text-align: left;
+	text-indent: 50px;
+	color: white;
+}
+
+p {
+	text-transform: uppercase;
+	text-align: center;
+	text-indent: 100px;
+	color: white;
+}
+
+canvas {
+	background: #85DDC7;
+	margin: 0 auto;
+	border: 6px solid white;
+}

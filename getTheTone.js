@@ -44,8 +44,10 @@ function goStream(stream) {
     
     input = context.createMediaStreamSource(stream);
 	var low = context.createBiquadFilter();
+	
 	low.frequency.value = 1000.0;
 	low.type = low.LOWPASS;
+	
 	var high = context.createBiquadFilter();
 	high.frequency.value = 100.0;
 	high.type = high.HIGHPASS;
@@ -187,6 +189,15 @@ canvas.width = 512;
 canvas.height = 480;
 document.body.appendChild(canvas);
 
+//set time
+var sTime = new Date().getTime();
+var countDown = 10;
+var seconds;
+
+
+//Stage
+//stage = new createjs.Stage("canvas"); //createjs
+
 //Bakgrundsbild?
 
 //Reset when game is over
@@ -197,21 +208,47 @@ var reset = function() {
 
 var update = function(modifier) {
 	var userFrequency = updatePitch();
-	//var referensFrequency = ReferensFreq();
 
-	console.log("hejhejhej");
+	console.log("UPDATE");
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
 		ReferensFreq(); //slumpar fram en ny ton. 
+		score += 10;
 	}
 
-
-
-	//if time is out bla bla
+	//if time is out
+	if (seconds < 0) { 
+		console.log("time is out");
+	}
 
 }
 
+//TIMER--------------------------
+
+var currentTime = setInterval( function () { updateTime() }, 1000);
+function updateTime() {
+
+	var cTime = new Date().getTime();
+	var diff = cTime - sTime;
+	seconds = countDown - Math.floor(diff / 1000);
+
+	if (seconds < 0) {
+		document.getElementById("theTimer").innerHTML = "Game over";
+		clearInterval(currentTime);
+
+	}
+	else {
+		document.getElementById("theTimer").innerHTML = "Time: " + seconds.toString();	
+	}
+}
+
+updateTime();
+var count = setInterval(updateTime, 1000);
+
+
+
+//------------------------
 var render = function() {
 	//rita saker
 
