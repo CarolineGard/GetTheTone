@@ -18,6 +18,9 @@ var analyser,
 	freqDomain,
 	frequency;
 
+var playedTone;
+var counter = 0;
+
 //läser in frekvensen
 var analyser = context.createAnalyser();
 analyser.fftSize = 2048;
@@ -158,12 +161,14 @@ function ReferensFreq() {
 				
 	sample.changeFrequency(x.innerHTML);
 
-	return x.innerHTML;
+	playedTone = x.innerHTML;
+
+	//return x.innerHTML;
 }
 
 function toDo(){
 	sample.toggle();
-	//ReferensFreq();
+	ReferensFreq();
 	main();
 }
 
@@ -185,13 +190,16 @@ var reset = function() {
 
 var update = function(modifier) {
 	var userFrequency = updatePitch();
-	var referensFrequency = ReferensFreq();
+	//var referensFrequency = ReferensFreq();
 
 	console.log("hejhejhej");
 
-	if ((userFrequency > referensFrequency - 5) && (userFrequency < referensFrequency + 5)) {
+	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
+		ReferensFreq(); //slumpar fram en ny ton. 
 	}
+
+
 
 	//if time is out bla bla
 
@@ -212,21 +220,14 @@ var render = function() {
 
 
 var main = function () {
-	var now = Date.now();
-	var delta = now - then;
+	if (counter == 0) {
+		ReferensFreq(); // för första gången
+		counter++;
+	}
 
-	update(delta / 1000);
-
-	then = now;
-
-	requestAnimationFrame(main);
-
-
-}
-
-var main = function () {
 	update();
 	requestAnimationFrame(main);
+
 }
 
 
