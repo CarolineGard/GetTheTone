@@ -43,11 +43,18 @@ function error() {
 function goStream(stream) {
     
     input = context.createMediaStreamSource(stream);
-
+	var low = context.createBiquadFilter();
+	low.frequency.value = 1000.0;
+	low.type = low.LOWPASS;
+	var high = context.createBiquadFilter();
+	high.frequency.value = 100.0;
+	high.type = high.HIGHPASS;
+	
     //Lägga in bandpassfilter!!!
     //biquadFilter = lowpass, highpass, bandpass...
-
-    input.connect( analyser );
+	input.connect(low);
+	low.connect(high)
+	high.connect(analyser);
 
     updatePitch();
   }
