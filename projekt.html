@@ -2,15 +2,10 @@
 <html>
 	<head>
 		<script type="jquery-2.1.1.js"></script>
-		<script src="oscillator-sample.js"></script>
-		<script src="shared.js"></script>
-		<script src="GetFrequency.js"></script>
-		<script type="text/javascript"></script>
-		<script type="pixi.js"></script> 
-		<script type="game.js"></script>	
 		<script language="javascript" type="text/javascript" src="
 			http://code.createjs.com/createjs-2013.12.12.min.js" ></script> 
 
+		<script type="text/javascript"></script> 
 
 		<title>Kul med mikrofon!</title>
 
@@ -18,41 +13,18 @@
 
 	<body>
 	 	<div id="wrapper">
-			<div id="roligt"></div>
-		  	<div id="header">
-			</div>
-			
 
 			<!-- //Frekvensen -->
-			<div class="pitch"><span id="pitch">--</span>Hz</div>
-
-
-			<!--<canvas class="visualizer"
-					style="background: mediumGreen;">
-					id = "myCanvas" </canvas>-->
+			
+			<p id="pitch">Hz</p>
 
 		 </div> 
-		 
-		 <script>
-			function myFunction() {
-				var x = document.getElementById("demo");
-				x.innerHTML = Math.floor((Math.random() * 801) + 200);
-				
-				sample.changeFrequency(x.innerHTML);
-			}
-			function toDo(){
-				sample.toggle();
-				myFunction();
-			}
-			
-		
-			
-		</script>
+
 		<p id="demo"></p>
+
 		<button onclick="toDo()">Ny ton</button>
-		<script>
-			var sample = new OscillatorSample();
-			
-		</script>
+		
+		<script src="getTheTone.js"></script> 
+
 	</body>
 </html>
