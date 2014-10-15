@@ -163,7 +163,8 @@ function ReferensFreq() {
 
 function toDo(){
 	sample.toggle();
-	ReferensFreq();
+	//ReferensFreq();
+	main();
 }
 
 
@@ -183,7 +184,7 @@ var reset = function() {
 
 
 var update = function(modifier) {
-	//var userFrequency = updatePitch();
+	var userFrequency = updatePitch();
 	var referensFrequency = ReferensFreq();
 
 	console.log("hejhejhej");
@@ -223,11 +224,10 @@ var main = function () {
 
 }
 
-
-
-
-
-
+var main = function () {
+	update();
+	requestAnimationFrame(main);
+}
 
 
 
