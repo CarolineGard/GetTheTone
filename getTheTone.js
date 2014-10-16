@@ -269,7 +269,7 @@ var gameCounter = new Countdown({
     seconds:10,  // number of seconds to count down
     onUpdateStatus: function(sec){
 							console.log(sec);
-							document.getElementById("theTimer").innerHTML = "Time: " + sec.toString();	
+							document.getElementById("theTimer").innerHTML = "  Time: " + sec.toString();	
 							}, // callback for each second
     onCounterEnd: function(){ 
 						document.getElementById("theTimer").innerHTML = "Game over";

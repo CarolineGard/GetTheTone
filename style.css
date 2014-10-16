@@ -23,23 +23,38 @@ div.spelSlut {
 	height: 500px;
 	right: 195px;
 	z-index: 10;
-	top: 50px;
+	top: 97px;
 	position: fixed;
 	font-family:'Open Sans Condensed', sans-serif;
 }
 
-p.menuText {
+div.menuText1 {
 	color: #8E8E8E;
-	top: 100px;
+	top: 200px;
 	font-family:'Open Sans Condensed', sans-serif;
-	text-align: center; 
+	margin: 1% 0 3.5% 0;
+	text-align: center;
+	left:100px;
+
+
+}
+
+.element {
+  position: relative;
+  top: 35%;
+  transform: translateY(-35%);
 }
 
 h1 {
-	top: 30px;
 	display: inline-block;
 	text-transform: uppercase;
 	color: 			#85DDC7;
+	margin: 50 500 500 500;
+}
+
+h3 {
+	color: #FFFFFF;
+	text-align: left;
 }
 
 h6 {

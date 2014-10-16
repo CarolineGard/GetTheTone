@@ -18,14 +18,16 @@
 	 	<div id="wrapper">
 
 	 		<div class="theMenu" id="menu" style="visibility:visible" >
-	 			 <h1> Get The Note! </h1>
-	 			 <p class ="menuText" > Försök ta så många toner du kan. Du har 10 sekunder på dig per ton! TAGGA! </p>
-	 			 <button class = "startBtn", onclick="toDo()">Starta spelet</button>
+	 			<div class="element">
+		 			 <h1> Get The Note! </h1>
+		 			 <div class="menuText1" >Försök ta så många toner du kan. Du har 10 sekunder på dig per ton! TAGGA!</div>
+		 			 <button class = "startBtn", onclick="toDo()">Starta spelet</button>
+		 		</div>
 	 		</div>
 			
 			<div class="spelSlut" id="menu2" style="visibility:hidden" >
 	 			 <h1> Get The Note! </h1>
-	 			 <p class ="menuText", id = "score" >  </p>
+	 			 <p class ="menuText", id = "score" ></p>
 	 			 <button class = "startBtn", onclick="toDo()">Starta spelet</button>
 	 		</div>
 
@@ -42,7 +44,7 @@
 		<script src="./two.min.js"></script>
 		 
 		<h6 id="de"></h6>
-		<h5 id="theTimer" ></h5> <!-- for countDown -->
+		<h3 id="theTimer" ></h3> <!-- for countDown -->
 		
 		
 		<script src="getTheTone.js"></script> 
