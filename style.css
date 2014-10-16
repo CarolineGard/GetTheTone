@@ -1,7 +1,25 @@
 
+
 body {
 	background: #85DDC7;
 	text-align: center;
+}
+
+div.theMenu {
+	background: #FFFFFF;
+	width: 1000px;
+	height: 500px;
+	right: 1px;
+	z-index: 10;
+	top: 50px;
+	position: fixed;
+}
+
+h1 {
+	text-transform: uppercase;
+	text-align: 	center;
+	text-indent: 	70px;
+	color: 			#85DDC7;
 }
 
 h5 {
@@ -23,3 +41,13 @@ canvas {
 	margin: 0 auto;
 	border: 6px solid white;
 }
+
+
+
+
+
+
+
+
+
+

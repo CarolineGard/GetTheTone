@@ -178,6 +178,7 @@ function ReferensFreq() {
 function toDo(){
 	sample.toggle();
 	ReferensFreq();
+	var count = setInterval(updateTime, 1000);
 	main();
 }
 
@@ -185,9 +186,9 @@ function toDo(){
 //Create the canvas-----------------------------
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 512;
+canvas.width = 1000;
 canvas.height = 480;
-document.body.appendChild(canvas);
+document.body.appendChild(canvas); 
 
 //set time
 var sTime = new Date().getTime();
@@ -226,7 +227,7 @@ var update = function(modifier) {
 
 //TIMER--------------------------
 
-var currentTime = setInterval( function () { updateTime() }, 1000);
+//var currentTime = setInterval( function () { updateTime() }, 1000);
 function updateTime() {
 
 	var cTime = new Date().getTime();
@@ -244,7 +245,7 @@ function updateTime() {
 }
 
 updateTime();
-var count = setInterval(updateTime, 1000);
+
 
 
 
