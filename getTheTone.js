@@ -35,6 +35,7 @@ freqDomain = new Uint8Array(analyser.frequencyBinCount); //aurocorrelate behöve
 navigator.getUserMedia({ audio: true }, goStream, error); //gotStream
 
 
+
 function error() {
     alert('Stream generation failed.');
 }
@@ -69,7 +70,6 @@ function updatePitch( time ) {
 	// TODO: Paint confidence meter on canvasElem here.
 
 	pitch = ac;
-	console.log("Hej");
 	frequency = pitch;
 
 	//skriver ut pitch
@@ -233,6 +233,48 @@ var sTime = new Date().getTime();
 var countDown = 10;
 var seconds;
 
+//Graphics----------------------------------
+
+//two.update();
+
+var elem = document.querySelector('canvas');
+var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
+var two = new Two(params).appendTo(elem);
+
+var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
+line.noStroke();
+line.fill = '#FFFFFF';
+
+two.update();
+
+// var gameBox = document.querySelector('.canvas');
+// var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
+
+// var two = new Two(params).appendTo(gameBox);
+
+// var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
+// line.noStroke();
+// line.fill = '#FFFFFF';
+
+//beräkna placering med referensvalue
+
+
+// params = {width: 1000, height: 30 };
+// var two = new Two(params).appendTo(canvas);
+
+// var line = two.makeRectangle(1000, 1000, 250, 250);
+// line.noStroke();
+//line.fill('rgb( 200, 355, 0 )');
+
+//two.update();
+
+
+
+
+
+
+//-------------------------------------------
+
 
 //Stage
 //stage = new createjs.Stage("canvas"); //createjs
@@ -248,7 +290,6 @@ var score = 0;
 var update = function(modifier) {
 	var userFrequency = updatePitch();
 	var points = document.getElementById("points");
-	console.log("UPDATE");
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
