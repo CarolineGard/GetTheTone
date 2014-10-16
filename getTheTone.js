@@ -161,14 +161,23 @@ OscillatorSample.prototype.toggle = function() {
 	this.isPlaying = !this.isPlaying;
 };
 OscillatorSample.prototype.changeFrequency = function(val) {
+	console.log("FORE: " + this.oscillator.frequency.value);
 	this.oscillator.frequency.value = val;
+	console.log("EFTER: " + this.oscillator.frequency.value);
 };
 
+var thePlayed;
+
 function ReferensFreq() {
+	var MAX = 545;
+	thePlayed = Math.floor((Math.random() * 351) + 200);
+
 	var x = document.getElementById("demo");
-	x.innerHTML = Math.floor((Math.random() * 351) + 200);
+	x.innerHTML = thePlayed;
 				
-	sample.changeFrequency(x.innerHTML);
+	sample.changeFrequency(thePlayed); //x.innerHTML
+
+	thePlayed = MAX - thePlayed + 70;
 	
 	toneCounter.start();
 	render();
@@ -190,6 +199,7 @@ function toDo(){
 }
 
 var currentTime;
+
 //Create the canvas-----------------------------
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -201,12 +211,7 @@ document.body.appendChild(canvas);
 var sTime = new Date().getTime();
 var countDown = 10;
 var sec;
-
-
-//Stage
-//stage = new createjs.Stage("canvas"); //createjs
-
-//Bakgrundsbild?
+ 
 
 //Reset when game is over
 var reset = function() {
@@ -223,6 +228,7 @@ var update = function(modifier) {
 		console.log("kul");
 		ReferensFreq(); //slumpar fram en ny ton. 
 		score += 10;
+		r = e = 0; //nollställer
 	}
 	points.innerHTML = score + " poäng";
 	//if time is out
@@ -235,24 +241,6 @@ var update = function(modifier) {
 }
 
 //TIMER--------------------------
-
-//var currentTime = setInterval( function () { updateTime() }, 1000);
-/*function updateTime() {
-
-	var cTime = new Date().getTime();
-	var diff = cTime - sTime;
-	sec = countDown - Math.floor(diff / 1000);
-
-	if (sec < 0) {
-		document.getElementById("theTimer").innerHTML = "Game over";
-		clearInterval(currentTime);
-
-	}
-	else {
-		document.getElementById("theTimer").innerHTML = "Time: " + sec.toString();	
-	}
-}
-updateTime();*/
 
 var toneCounter = new Countdown({  
     seconds:1,  // number of seconds to count down
@@ -302,37 +290,33 @@ function Countdown(options) {
 }
 //Graphics----------------------------
 
+two = new Two({
+        fullscreen: true
+});
 
-
+//SKAPA LINJEN
 var yled = 0;
+
+document.getElementById("de").innerHTML = yled;
+var el = document.getElementById("man");
+ 
+two.appendTo(el);
+var line = two.makeRectangle(720, 545, 1000, 5);	
+line.fill = "white";
+line.noStroke();
+
+
 //------------------------
 var render = function() {
 	//rita saker
-	
-	var e = Math.round(400/350);
-	var r = playedTone - 200;
-	yled = (e*r) + 70 ;
-	document.getElementById("de").innerHTML = yled;
-	var el = document.getElementById("man"),
-    two = new Two({
-        fullscreen: true
-    });
- 
-	two.appendTo(el);
+	e = Math.round(480 / 350);
+	r = Number(thePlayed) - 200;
+	yled = (e * r) + 300 ;
+ 	
+ 	line.translation.set(720, yled);
 
-	var rect = two.makeRectangle(683, 200, 1000, 5);
-	rect.fill = "white";
-	rect.noStroke();
- 
 	two.update();
 	document.getElementById("man").style.visibility = 'visible';
-
-	// Score
-	/*ctx.fillStyle = "rgb(250, 250, 250)";
-	ctx.font = "24px Helvetica";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: " + score, 32, 32);*/
 
 
 }
