@@ -54,9 +54,10 @@ function goStream(stream) {
 	
     //Lägga in bandpassfilter!!!
     //biquadFilter = lowpass, highpass, bandpass...
-	input.connect(low);
+	/*input.connect(low);
 	low.connect(high)
-	high.connect(analyser);
+	high.connect(analyser);*/
+	input.connect(analyser);
 
     updatePitch();
   }
@@ -217,12 +218,25 @@ var sec;
 var reset = function() {
 	score = 0;
 }
+//Rita cirkel
+var el = document.getElementById("manCirkel"),
+twoCirkel = new Two({
+		fullscreen: true
+		});
+							
+	twoCirkel.appendTo(el);
+	var cirkel = twoCirkel.makeCircle(110,110,10);
+	cirkel.fill = "white";
+	cirkel.noStroke();
 
 var score = 0;
 var update = function(modifier) {
 	var userFrequency = updatePitch();
 	var points = document.getElementById("points");
 	//console.log("UPDATE");
+	
+	cirkel.translation.set(700,userFrequency);
+	twoCirkel.update();
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
