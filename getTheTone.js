@@ -47,17 +47,10 @@ function goStream(stream) {
 	
 	low.frequency.value = 1000.0;
 	low.type = low.LOWPASS;
-	
-	var high = context.createBiquadFilter();
-	high.frequency.value = 100.0;
-	high.type = high.HIGHPASS;
-	
-    //Lägga in bandpassfilter!!!
+
     //biquadFilter = lowpass, highpass, bandpass...
-	/*input.connect(low);
-	low.connect(high)
-	high.connect(analyser);*/
-	input.connect(analyser);
+	input.connect(low);
+	low.connect(analyser);
 
     updatePitch();
   }
@@ -168,9 +161,10 @@ OscillatorSample.prototype.changeFrequency = function(val) {
 };
 
 var thePlayed;
+var MAX = 545;
 
 function ReferensFreq() {
-	var MAX = 545;
+	
 	thePlayed = Math.floor((Math.random() * 351) + 200);
 
 	var x = document.getElementById("demo");
@@ -234,17 +228,25 @@ var update = function(modifier) {
 	var userFrequency = updatePitch();
 	var points = document.getElementById("points");
 	//console.log("UPDATE");
+
+	var freq = Number(userFrequency) + Number(120);
+	t = Math.round(480 / 350);
+	p = Number(userFrequency) - 200;
+	ypos = (t * p) + 25;
+
+	ypos = MAX - ypos + 70;
+
+	console.log("frek: " + freq);
 	
-	cirkel.translation.set(700,userFrequency);
+	cirkel.translation.set(700, ypos);
 	twoCirkel.update();
 
-	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
-		console.log("kul");
+	if ((userFrequency > playedTone - 5) && (userFrequency < playedTone + 5)) {
 		ReferensFreq(); //slumpar fram en ny ton. 
 		score += 10;
-		r = e = 0; //nollställer
+		gameCounter.start();
 	}
-	points.innerHTML = score + " poäng";
+	points.innerHTML = score + " Poäng";
 	//if time is out
 	if (sec == 0) { 
 		//console.log("time is out");
@@ -325,14 +327,12 @@ var render = function() {
 	//rita saker
 	e = Math.round(480 / 350);
 	r = Number(thePlayed) - 200;
-	yled = (e * r) + 300 ;
+	yled = (e * r) + 390 ;
  	
- 	line.translation.set(720, yled);
+ 	line.translation.set(720, yled); //längs ned då yled = 590, högst y = 102
 
 	two.update();
 	document.getElementById("man").style.visibility = 'visible';
-
-
 }
 
 
