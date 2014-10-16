@@ -35,7 +35,6 @@ freqDomain = new Uint8Array(analyser.frequencyBinCount); //aurocorrelate behöve
 navigator.getUserMedia({ audio: true }, goStream, error); //gotStream
 
 
-
 function error() {
     alert('Stream generation failed.');
 }
@@ -134,40 +133,7 @@ function autoCorrelate( buf, sampleRate ) {
 
 
 //Get tone to play------------------------------
-var myCounter = new Countdown({  
-    seconds:1,  // number of seconds to count down
-    onUpdateStatus: function(sec){console.log(sec);}, // callback for each second
-    onCounterEnd: function(){ sample.toggle();} // final action
-});
-//alert('counter ended!');
 
-function Countdown(options) {
-  var timer,
-  instance = this,
-  seconds = options.seconds || 10,
-  updateStatus = options.onUpdateStatus || function () {},
-  counterEnd = options.onCounterEnd || function () {};
-
-  function decrementCounter() {
-    updateStatus(seconds);
-    if (seconds === 0) {
-      counterEnd();
-      instance.stop();
-    }
-    seconds--;
-  }
-
-  this.start = function () {
-    clearInterval(timer);
-    timer = 0;
-    seconds = options.seconds;
-    timer = setInterval(decrementCounter, 1000);
-  };
-
-  this.stop = function () {
-    clearInterval(timer);
-  };
-}
 
 var sample = new OscillatorSample();
 
@@ -200,11 +166,11 @@ OscillatorSample.prototype.changeFrequency = function(val) {
 
 function ReferensFreq() {
 	var x = document.getElementById("demo");
-	x.innerHTML = Math.floor((Math.random() * 801) + 200);
+	x.innerHTML = Math.floor((Math.random() * 451) + 200);
 				
 	sample.changeFrequency(x.innerHTML);
 	
-	myCounter.start();
+	toneCounter.start();
 	playedTone = x.innerHTML;
 
 	//return x.innerHTML;
@@ -213,14 +179,17 @@ function ReferensFreq() {
 function toDo(){
 	//make menu invisible
 	document.getElementById("menu").style.visibility = 'hidden';
+	document.getElementById("menu2").style.visibility = 'hidden';
 
 	sample.toggle();
 	ReferensFreq();
-	var count = setInterval(updateTime, 1000);
+	gameCounter.start();
+	//var count = setInterval(updateTime, 1000);
+	//currentTime = setInterval( function () { updateTime() }, 1000);
 	main();
 }
 
-
+var currentTime;
 //Create the canvas-----------------------------
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -231,49 +200,7 @@ document.body.appendChild(canvas);
 //set time
 var sTime = new Date().getTime();
 var countDown = 10;
-var seconds;
-
-//Graphics----------------------------------
-
-//two.update();
-
-var elem = document.querySelector('canvas');
-var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
-var two = new Two(params).appendTo(elem);
-
-var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
-line.noStroke();
-line.fill = '#FFFFFF';
-
-two.update();
-
-// var gameBox = document.querySelector('.canvas');
-// var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
-
-// var two = new Two(params).appendTo(gameBox);
-
-// var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
-// line.noStroke();
-// line.fill = '#FFFFFF';
-
-//beräkna placering med referensvalue
-
-
-// params = {width: 1000, height: 30 };
-// var two = new Two(params).appendTo(canvas);
-
-// var line = two.makeRectangle(1000, 1000, 250, 250);
-// line.noStroke();
-//line.fill('rgb( 200, 355, 0 )');
-
-//two.update();
-
-
-
-
-
-
-//-------------------------------------------
+var sec;
 
 
 //Stage
@@ -290,18 +217,20 @@ var score = 0;
 var update = function(modifier) {
 	var userFrequency = updatePitch();
 	var points = document.getElementById("points");
+	console.log("UPDATE");
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
 		ReferensFreq(); //slumpar fram en ny ton. 
 		score += 10;
 	}
-	points.innerHTML = score;
+	points.innerHTML = score + " poäng";
 	//if time is out
-	if (seconds < 0) { 
+	if (sec == 0) { 
 		console.log("time is out");
-		document.getElementById("menu").style.visibility = 'visible';
-		document.getElementById("menu").innerHTML("Score" + score);
+		document.getElementById("menu2").style.visibility = 'visible';
+		document.getElementById("score").innerHTML = "Spelet slut. Du fick " + score + " poäng. Spela igen?";	
+		//document.getElementById("menu").innerHTML("Score" + score);
 	}
 
 }
@@ -309,24 +238,79 @@ var update = function(modifier) {
 //TIMER--------------------------
 
 //var currentTime = setInterval( function () { updateTime() }, 1000);
-function updateTime() {
+/*function updateTime() {
 
 	var cTime = new Date().getTime();
 	var diff = cTime - sTime;
-	seconds = countDown - Math.floor(diff / 1000);
+	sec = countDown - Math.floor(diff / 1000);
 
-	if (seconds < 0) {
+	if (sec < 0) {
 		document.getElementById("theTimer").innerHTML = "Game over";
 		clearInterval(currentTime);
 
 	}
 	else {
-		document.getElementById("theTimer").innerHTML = "Time: " + seconds.toString();	
+		document.getElementById("theTimer").innerHTML = "Time: " + sec.toString();	
 	}
 }
+updateTime();*/
 
-updateTime();
+var toneCounter = new Countdown({  
+    seconds:1,  // number of seconds to count down
+    onUpdateStatus: function(sec){console.log(sec);}, // callback for each second
+    onCounterEnd: function(){ sample.toggle();} // final action
+});
+//alert('counter ended!');
+document.getElementById("theTimer").innerHTML = "Time: 10";
+var gameCounter = new Countdown({  
+    seconds:10,  // number of seconds to count down
+    onUpdateStatus: function(sec){
+							console.log(sec);
+							document.getElementById("theTimer").innerHTML = "Time: " + sec.toString();	
+							}, // callback for each second
+    onCounterEnd: function(){ 
+						document.getElementById("theTimer").innerHTML = "Game over";
+						sec = 0;
+					} // final action
+});
 
+function Countdown(options) {
+  var timer,
+  instance = this,
+  seconds = options.seconds || 10,
+  updateStatus = options.onUpdateStatus || function () {},
+  counterEnd = options.onCounterEnd || function () {};
+
+  function decrementCounter() {
+    updateStatus(seconds);
+    if (seconds === 0) {
+      counterEnd();
+      instance.stop();
+    }
+    seconds--;
+  }
+
+  this.start = function () {
+    clearInterval(timer);
+    timer = 0;
+    seconds = options.seconds;
+    timer = setInterval(decrementCounter, 1000);
+  };
+
+  this.stop = function () {
+    clearInterval(timer);
+  };
+}
+//Graphics----------------------------
+var elem = document.querySelector('canvas');
+var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
+var two = new Two(params).appendTo(elem);
+
+var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
+line.noStroke();
+line.fill = '#FFFFFF';
+
+two.update();
 
 
 

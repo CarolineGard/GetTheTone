@@ -17,6 +17,17 @@ div.theMenu {
 	font-family:'Open Sans Condensed', sans-serif;
 }
 
+div.spelSlut {
+	background: #FFFFFF;
+	width: 1050px;
+	height: 500px;
+	right: 195px;
+	z-index: 10;
+	top: 50px;
+	position: fixed;
+	font-family:'Open Sans Condensed', sans-serif;
+}
+
 p.menuText {
 	color: #8E8E8E;
 	top: 100px;
