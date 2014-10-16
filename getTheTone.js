@@ -134,6 +134,40 @@ function autoCorrelate( buf, sampleRate ) {
 
 
 //Get tone to play------------------------------
+var myCounter = new Countdown({  
+    seconds:1,  // number of seconds to count down
+    onUpdateStatus: function(sec){console.log(sec);}, // callback for each second
+    onCounterEnd: function(){ sample.toggle();} // final action
+});
+//alert('counter ended!');
+
+function Countdown(options) {
+  var timer,
+  instance = this,
+  seconds = options.seconds || 10,
+  updateStatus = options.onUpdateStatus || function () {},
+  counterEnd = options.onCounterEnd || function () {};
+
+  function decrementCounter() {
+    updateStatus(seconds);
+    if (seconds === 0) {
+      counterEnd();
+      instance.stop();
+    }
+    seconds--;
+  }
+
+  this.start = function () {
+    clearInterval(timer);
+    timer = 0;
+    seconds = options.seconds;
+    timer = setInterval(decrementCounter, 1000);
+  };
+
+  this.stop = function () {
+    clearInterval(timer);
+  };
+}
 
 var sample = new OscillatorSample();
 
@@ -169,7 +203,8 @@ function ReferensFreq() {
 	x.innerHTML = Math.floor((Math.random() * 801) + 200);
 				
 	sample.changeFrequency(x.innerHTML);
-
+	
+	myCounter.start();
 	playedTone = x.innerHTML;
 
 	//return x.innerHTML;
@@ -206,10 +241,10 @@ var reset = function() {
 	score = 0;
 }
 
-
+var score = 0;
 var update = function(modifier) {
 	var userFrequency = updatePitch();
-
+	var points = document.getElementById("points");
 	console.log("UPDATE");
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
@@ -217,7 +252,7 @@ var update = function(modifier) {
 		ReferensFreq(); //slumpar fram en ny ton. 
 		score += 10;
 	}
-
+	points.innerHTML = score;
 	//if time is out
 	if (seconds < 0) { 
 		console.log("time is out");
