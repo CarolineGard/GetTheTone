@@ -15,9 +15,10 @@
 	<body>
 	 	<div id="wrapper">
 
-	 		<div class="theMenu">
+	 		<div class="theMenu" id="menu" style="visibility:visible" >
 	 			 <h1> Get The Note! </h1>
-	 			 <!-- <button class="menuBtn" onclick="toDo()">STARTA SPELET</button> -->
+	 			 <p class ="menuText" > Försök ta så många toner du kan. Du har 10 sekunder på dig per ton! TAGGA! </p>
+	 			 <button class = "startBtn", onclick="toDo()">Ny ton</button>
 	 		</div>
 
 			<!-- //Frekvensen -->
@@ -25,7 +26,6 @@
 			<p id="pitch">Hz</p>
 
 		 </div> 
-		<button class = "myButton", onclick="toDo()">Ny ton</button>
 		<p id="demo"></p> <!-- for oscillator -->
 		<h5 id="theTimer" ></h1> <!-- for countDown -->
 		<p id="points"></p>

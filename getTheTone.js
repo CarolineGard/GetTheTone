@@ -211,6 +211,9 @@ function ReferensFreq() {
 }
 
 function toDo(){
+	//make menu invisible
+	document.getElementById("menu").style.visibility = 'hidden';
+
 	sample.toggle();
 	ReferensFreq();
 	var count = setInterval(updateTime, 1000);
@@ -256,6 +259,8 @@ var update = function(modifier) {
 	//if time is out
 	if (seconds < 0) { 
 		console.log("time is out");
+		document.getElementById("menu").style.visibility = 'visible';
+		document.getElementById("menu").innerHTML("Score" + score);
 	}
 
 }
