@@ -41,12 +41,15 @@ h1 {
 	color: 			#85DDC7;
 }
 
+
 h5 {
 	text-transform: uppercase;
 	text-align: left;
 	text-indent: 50px;
 	color: white;
 }
+
+
 
 p {
 	text-transform: uppercase;
@@ -60,6 +63,7 @@ canvas {
 	margin: 0 auto;
 	border: 6px solid white;
 }
+
 
 .startBtn {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#84ddc7', endColorstr='#85ddc7',GradientType=0);

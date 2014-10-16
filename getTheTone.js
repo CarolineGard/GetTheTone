@@ -166,11 +166,12 @@ OscillatorSample.prototype.changeFrequency = function(val) {
 
 function ReferensFreq() {
 	var x = document.getElementById("demo");
-	x.innerHTML = Math.floor((Math.random() * 451) + 200);
+	x.innerHTML = Math.floor((Math.random() * 351) + 200);
 				
 	sample.changeFrequency(x.innerHTML);
 	
 	toneCounter.start();
+	render();
 	playedTone = x.innerHTML;
 
 	//return x.innerHTML;
@@ -180,7 +181,6 @@ function toDo(){
 	//make menu invisible
 	document.getElementById("menu").style.visibility = 'hidden';
 	document.getElementById("menu2").style.visibility = 'hidden';
-
 	sample.toggle();
 	ReferensFreq();
 	gameCounter.start();
@@ -217,7 +217,7 @@ var score = 0;
 var update = function(modifier) {
 	var userFrequency = updatePitch();
 	var points = document.getElementById("points");
-	console.log("UPDATE");
+	//console.log("UPDATE");
 
 	if ((userFrequency > playedTone - 1) && (userFrequency < playedTone + 1)) {
 		console.log("kul");
@@ -227,10 +227,9 @@ var update = function(modifier) {
 	points.innerHTML = score + " poäng";
 	//if time is out
 	if (sec == 0) { 
-		console.log("time is out");
+		//console.log("time is out");
 		document.getElementById("menu2").style.visibility = 'visible';
 		document.getElementById("score").innerHTML = "Spelet slut. Du fick " + score + " poäng. Spela igen?";	
-		//document.getElementById("menu").innerHTML("Score" + score);
 	}
 
 }
@@ -302,28 +301,38 @@ function Countdown(options) {
   };
 }
 //Graphics----------------------------
-var elem = document.querySelector('canvas');
-var params = { width: canvas.WIDTH, height: canvas.HEIGHT };
-var two = new Two(params).appendTo(elem);
-
-var line = two.makeRectangle(canvas.WIDTH, 6, 6, 250);
-line.noStroke();
-line.fill = '#FFFFFF';
-
-two.update();
 
 
 
+var yled = 0;
 //------------------------
 var render = function() {
 	//rita saker
+	
+	var e = Math.round(400/350);
+	var r = playedTone - 200;
+	yled = (e*r) + 70 ;
+	document.getElementById("de").innerHTML = yled;
+	var el = document.getElementById("man"),
+    two = new Two({
+        fullscreen: true
+    });
+ 
+	two.appendTo(el);
+
+	var rect = two.makeRectangle(683, 200, 1000, 5);
+	rect.fill = "white";
+	rect.noStroke();
+ 
+	two.update();
+	document.getElementById("man").style.visibility = 'visible';
 
 	// Score
-	ctx.fillStyle = "rgb(250, 250, 250)";
+	/*ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: " + score, 32, 32);
+	ctx.fillText("Goblins caught: " + score, 32, 32);*/
 
 
 }
@@ -339,49 +348,3 @@ var main = function () {
 	requestAnimationFrame(main);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
